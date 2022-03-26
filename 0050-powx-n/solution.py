@@ -17,11 +17,25 @@ class Solution:
 			
 		return y
 	
-if __name__ == '__main__':
-	test_cases = [(2.0, 10), (-2.0, 11), (2.0, -12), (2.0, 0), (0.0, 10)]
+def main() -> None:
+	test_cases = [
+	(2.0, 10),
+	(-2.0, 11),
+	(2.0, -12),
+	(2.0, 0),
+	(0.0, 10)]
 	
-	sol = Solution()
+	solution = Solution()
 	
-	for i, inputs in enumerate(test_cases):
-		print(str(sol.myPow(inputs[0], inputs[1])) + ' =? ' + str(pow(inputs[0], inputs[1])))
+	for inputs in test_cases:
+		x = inputs[0]
+		n = inputs[1]
 		
+		reference = pow(x, n)
+		test = solution.myPow(x, n)
+		
+		print(str(test) + ' =? ' + str(reference))
+		
+if __name__ == '__main__':
+	main()
+	
