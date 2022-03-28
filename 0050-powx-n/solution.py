@@ -28,8 +28,7 @@ def main() -> None:
 	solution = Solution()
 	
 	for inputs in test_cases:
-		x = inputs[0]
-		n = inputs[1]
+		x, n = inputs
 		
 		reference = pow(x, n)
 		test = solution.myPow(x, n)
