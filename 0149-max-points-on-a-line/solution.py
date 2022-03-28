@@ -13,11 +13,10 @@ class Solution:
 		
 		max_count = 0
 		for center_point in range(n_points):
-			angles = [atan2(points[i][0] - points[center_point][0],
-			                points[i][1] - points[center_point][1]) for i in range(n_points)]
+			angles = [atan2(points[i][1] - points[center_point][1], points[i][0] - points[center_point][0]) for i in range(n_points)]
 			del angles[center_point]
-			md = mode(angles)
-			count = len([x for x in angles if abs(x - md) < 1.0e-9])
+			m = mode(angles)
+			count = len([x for x in angles if abs(x - m) < 1.0e-9]) # avoid strict equality due to possible roundoff errors
 			count += 1 # the center point is on the line
 			max_count = max(max_count, count)
 			
