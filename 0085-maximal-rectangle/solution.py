@@ -1,4 +1,12 @@
+from dataclasses import dataclass
 from typing import List
+
+@dataclass
+class Bar:
+	width: int = 1
+	height: int = 0
+	left: 'Bar' = None # better way to do this?
+	right: 'Bar' = None # better way to do this?
 
 class Solution:
 	def largestRectangleArea(self, heights: List[int]) -> int:
@@ -9,72 +17,67 @@ class Solution:
 		elif n_heights == 1:
 			return heights[0]
 		
-		widths = n_heights * [1]
-		lefts = list(range(-1, n_heights - 1))
-		rights = list(range(1, n_heights + 1))
-		rights[-1] = -1
+		bars = [Bar(height = heights[i]) for i in range(n_heights)]
+		bars[0].right = bars[1]
+		for i in range(1, n_heights - 1):
+			bars[i].left = bars[i - 1]
+			bars[i].right = bars[i + 1]
+		bars[-1].left = bars[-2]
 		
-		to_be_sorted = [(heights[i], i) for i in range(n_heights)]
-		to_be_sorted.sort(key = lambda x: x[0], reverse = True)
-		to_be_sorted = [to_be_sorted[i][1] for i in range(n_heights)]
+		bars.sort(key = lambda bar: bar.height, reverse = True)
 		
-		max_area = heights[to_be_sorted[0]]
+		max_area = bars[0].height
 		
-		for current in to_be_sorted:
+		for bar in bars:
 			
 			# this bar has already been devoured, so move on
-			if widths[current] == 0:
+			if bar.width == 0:
 				continue
 			
 			# keep devouring until the bar has fallen below its neighbors
 			while True:
 				
-				left = lefts[current]
-				right = rights[current]
+				left = bar.left
+				right = bar.right
 				
 				devour_left = False
 				devour_right = False
 				
-				if left >= 0 and right >= 0:
-					
-					if heights[current] >= heights[left] and heights[current] >= heights[right]:
-						if heights[left] > heights[right]:
+				if left is not None and right is not None:
+					if bar.height >= left.height and bar.height >= right.height:
+						if left.height >= right.height:
 							devour_left = True
 						else:
 							devour_right = True
 							
-				elif left >= 0:
-					
-					if heights[current] >= heights[left]:
+				elif left is not None:
+					if bar.height >= left.height:
 						devour_left = True
 						
-				elif right >= 0:
-					
-					if heights[current] >= heights[right]:
+				elif right is not None:
+					if bar.height >= right.height:
 						devour_right = True
 						
 				if devour_left:
-					
-					widths[current] = widths[current] + widths[left]
-					heights[current] = min(heights[current], heights[left])
-					lefts[current] = lefts[left]
-					if lefts[current] >= 0:
-						rights[lefts[current]] = current
-					widths[left] = 0
+					bar.width = bar.width + left.width
+					bar.height = min(bar.height, left.height)
+					bar.left = left.left
+					if bar.left is not None:
+						bar.left.right = bar
+					left.width = 0
 					
 				elif devour_right:
-					
-					widths[current] = widths[current] + widths[right]
-					heights[current] = min(heights[current], heights[right])
-					rights[current] = rights[right]
-					if rights[current] >= 0:
-						lefts[rights[current]] = current
-					widths[right] = 0
+					bar.width = bar.width + right.width
+					bar.height = min(bar.height, right.height)
+					bar.right = right.right
+					if bar.right is not None:
+						bar.right.left = bar
+					right.width = 0
 					
 				else:
-					break
+					break # nothing left to devour :(
 				
-				max_area = max(max_area, widths[current] * heights[current])
+				max_area = max(max_area, bar.width * bar.height)
 				
 		return max_area
 	
@@ -91,7 +94,7 @@ class Solution:
 				else:
 					count += 1
 				ones_above[i][j] = count
-		
+				
 		max_area = 0
 		for i in range(m):
 			max_area = max(max_area, self.largestRectangleArea(ones_above[i]))
