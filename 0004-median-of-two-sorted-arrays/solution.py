@@ -81,8 +81,7 @@ def main() -> None:
 	solution = Solution();
 	
 	for inputs in test_cases:
-		nums1 = inputs[0]
-		nums2 = inputs[1]
+		nums1, nums2 = inputs
 		
 		reference = median(sorted(nums1 + nums2))
 		test = solution.findMedianSortedArrays(nums1, nums2)

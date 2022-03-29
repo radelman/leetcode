@@ -85,7 +85,7 @@ class Solution:
 		m = len(matrix)
 		n = len(matrix[0])
 		
-		ones_above = [n * [0] for i in range(m)];
+		ones_above = [n * [0] for i in range(m)]
 		for j in range(n):
 			count = 0
 			for i in range(m):
