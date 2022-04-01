@@ -1,19 +1,6 @@
 from typing import List
 
 class Solution:
-	def inHash(self, nums: List[int], num) -> bool:
-		n_nums = len(nums)
-		
-		loc = num % n_nums
-		loc_orig = loc
-		
-		while nums[loc] != -num:
-			loc = (loc + 1) % n_nums
-			if loc == loc_orig:
-				return False
-			
-		return True
-	
 	def firstMissingPositive(self, nums: List[int]) -> int:
 		n_nums = len(nums)
 		
@@ -26,7 +13,7 @@ class Solution:
 				return 1
 			
 		for i in range(n_nums):
-			if nums[i] < 0:
+			if nums[i] < 1 or nums[i] > n_nums:
 				nums[i] = 0
 				
 		for i in range(n_nums):
@@ -35,31 +22,32 @@ class Solution:
 				nums[i] = 0
 				start_from_next = i + 1
 				break
-		if num == 0:
+		if num < 1:
 			return 1
 		
 		while num > 0:
-			loc = num % n_nums
-			while nums[loc] < 0:
-				loc = (loc + 1) % n_nums
+			loc = num - 1
+			if nums[loc] != -num:
+				nums[loc], num = -num, nums[loc]
+			else:
+				num = 0
 				
-			nums[loc], num = -num, nums[loc]
-			
 			if num == 0:
 				while start_from_next < n_nums:
 					num = nums[start_from_next]
 					if num > 0:
 						nums[start_from_next] = 0
+						start_from_next += 1
 						break
 					start_from_next += 1
 				if num == 0:
 					break
 				
-		for i in range(1, n_nums + 2):
-			if not self.inHash(nums, i):
+		for i in range(1, n_nums + 1):
+			if nums[i - 1] != -i:
 				return i
 			
-		return 0 # should never get here
+		return n_nums + 1
 	
 def main() -> None:
 	test_cases = [
