@@ -8,8 +8,12 @@ class Solution:
 		max_overall = nums[0]
 		
 		for i in range(1, n_nums):
-			max_ending_here = max(max_ending_here + nums[i], nums[i])
-			max_overall = max(max_overall, max_ending_here)
+			if max_ending_here > 0:
+				max_ending_here = max_ending_here + nums[i]
+			else:
+				max_ending_here = nums[i]
+			if max_ending_here > max_overall:
+				max_overall = max_ending_here
 			
 		return max_overall
 	
