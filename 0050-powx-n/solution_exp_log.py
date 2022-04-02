@@ -12,7 +12,7 @@ class Solution:
 			if n < 0:
 				y = 1.0 / y
 				
-		except:
+		except Exception:
 			y = 0.0
 			
 		return y

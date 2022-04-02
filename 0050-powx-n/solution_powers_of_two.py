@@ -1,24 +1,20 @@
 class Solution:
 	def myPow(self, x: float, n: int) -> float:
-		try:
-			abs_x = abs(x)
-			abs_n = abs(n)
-			y = 1.0
-			while abs_n > 0:
-				if abs_n & 1 == 1:
-					y = abs_x * y
-				abs_x = abs_x * abs_x
-				abs_n = abs_n >> 1
+		abs_x = abs(x)
+		abs_n = abs(n)
+		y = 1.0
+		while abs_n > 0:
+			if abs_n & 1 == 1:
+				y = abs_x * y
+			abs_x = abs_x * abs_x
+			abs_n = abs_n >> 1
+			
+		if x < 0.0:
+			if n % 2 == 1:
+				y = -y
 				
-			if x < 0.0:
-				if n % 2 == 1:
-					y = -y
-					
-			if n < 0:
-				y = 1.0 / y
-				
-		except:
-			y = 0.0
+		if n < 0:
+			y = 1.0 / y
 			
 		return y
 	
