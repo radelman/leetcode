@@ -1,8 +1,6 @@
-from collections import deque
 from typing import List, Tuple
 
 class Solution:
-	# is List[Tuple[int, int]] correct?
 	def heapify_number_in_window(self, window: List[Tuple[int, int]], idxs: List[int], current: int) -> None:
 		k = len(window)
 		
@@ -72,28 +70,6 @@ class Solution:
 			
 		return max_sliding_window
 	
-	# my answer after reading the dicussion section
-	def maxSlidingWindow_deque(self, nums: List[int], k: int) -> List[int]:
-		n_nums = len(nums)
-		
-		d = deque()
-		
-		max_sliding_window = []
-		
-		for i in range(n_nums):
-			while len(d) > 0 and d[0][0] < i - k + 1:
-				d.popleft()
-				
-			while len(d) > 0 and d[-1][1] < nums[i]:
-				d.pop()
-				
-			d.append((i, nums[i]))
-			
-			if i >= k - 1:
-				max_sliding_window.append(d[0][1])
-				
-		return max_sliding_window
-	
 def main() -> None:
 	test_cases = [
 	[[1,3,-1,-3,5,3,6,7], 3],
@@ -105,11 +81,9 @@ def main() -> None:
 	for inputs in test_cases:
 		nums, k = inputs
 		
-		test_heap = solution.maxSlidingWindow_heap(nums, k)
-		test_deque = solution.maxSlidingWindow_deque(nums, k)
+		test = solution.maxSlidingWindow_heap(nums, k)
 		
-		print("heap: " + str(test_heap))
-		print("deque: " + str(test_deque))
+		print(test)
 		
 if __name__ == '__main__':
 	main()
