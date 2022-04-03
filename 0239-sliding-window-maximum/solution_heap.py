@@ -43,7 +43,7 @@ class Solution:
 			window[current], window[swap_with] = window[swap_with], window[current] # before this one
 			current = swap_with
 			
-	# my answer before reading the dicussion section
+	# my answer before reading the discussion section
 	def maxSlidingWindow_heap(self, nums: List[int], k: int) -> List[int]:
 		n_nums = len(nums)
 		

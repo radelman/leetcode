@@ -2,7 +2,7 @@ from collections import deque
 from typing import List
 
 class Solution:
-	# my answer after reading the dicussion section
+	# my answer after reading the discussion section
 	def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
 		n_nums = len(nums)
 		
