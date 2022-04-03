@@ -40,7 +40,7 @@ class Solution:
 				break
 			
 			idxs[window[current][0]], idxs[window[swap_with][0]] = idxs[window[swap_with][0]], idxs[window[current][0]] # this line must go ...
-			window[current], window[swap_with] = window[swap_with], window[current] # before this one
+			window[current], window[swap_with] = window[swap_with], window[current] # ... before this one
 			current = swap_with
 			
 	# my answer before reading the discussion section
