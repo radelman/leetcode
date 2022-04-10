@@ -1,7 +1,7 @@
 class Solution:
 	def strStr(self, haystack: str, needle: str) -> int:
 		if len(needle) == 0:
-			return -1
+			return 0
 		
 		cumsum = [ord(c) for c in haystack]
 		for i in range(1, len(cumsum)):
